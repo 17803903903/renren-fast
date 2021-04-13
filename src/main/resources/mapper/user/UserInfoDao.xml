@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.user.dao.UserInfoDao">
+    <select id="getUserInfo" resultType="java.util.Map">
+        select * from userinfo
+    </select>
+
+    <select id="updateUserInfo" parameterType="java.util.Map">
+        UPDATE userinfo
+        SET phone = #{phone}, email = #{email},address = #{address}, detail = #{detail}, family = #{family}, education = #{education}, work = #{work},description =  #{description},idNumber =  #{idNumber}
+        WHERE name = #{name}
+    </select>
+
+    <select id="updateIdNumber" parameterType="java.util.Map">
+        UPDATE userinfo
+        SET phone = #{phone},idNumber =  #{idNumber}
+        WHERE name = #{name}
+    </select>
+
+    <select id="saveUserInfo" parameterType="java.util.Map">
+        INSERT INTO userinfo (`name`, `phone`, `date`, `email`, `address`, `detail`, `family`, `education`, `work`, `description`, `idNumber`,`user_id`)
+        VALUES (#{name}, #{phone}, #{date}, #{email}, #{address}, #{detail}, #{family}, #{education}, #{work}, #{description}, #{idNumber},#{id})
+    </select>
+
+    <select id="getPersonalInfo" resultType="java.util.Map">
+        select * from userinfo
+        where user_id = #{id}
+    </select>
+
+    <select id="getAllJobInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from companyjob
+        <where>
+            <if test="jobName != null and jobName != ''">
+                AND jobName like '%${jobName}%'
+            </if>
+            <if test="name != null and name != ''">
+                AND name like '%${name}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="saveCompanyPost" parameterType="java.util.Map">
+        INSERT INTO company_userinfo (`companyId`, `userId`)
+        VALUES (#{companyId},#{userId})
+    </select>
+
+</mapper>

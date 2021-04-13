@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.renren.modules.company.dao.CompanyInfoDao">
+    <select id="saveCompanyInfo" parameterType="java.util.Map">
+        INSERT INTO companyinfo (`name`, `phone`, `address`, `email`, `detail`, `user_id`)
+        VALUES (#{name}, #{phone}, #{address}, #{email}, #{detail}, #{id})
+    </select>
+
+    <select id="saveCompanyJob" parameterType="java.util.Map">
+        INSERT INTO companyjob (`name`, `jobName`, `jobDetail`, `jobDuty`, `money`, `required`, `user_id`)
+        VALUES (#{name}, #{jobName}, #{jobDetail}, #{jobDuty}, #{money}, #{required}, #{id})
+    </select>
+
+    <select id="updateCompanyJob" parameterType="java.util.Map">
+        update companyjob
+        set name = #{name},jobName = #{jobName},jobDetail = #{jobDetail},jobDuty = #{jobDuty},money = #{money},required = #{required},user_id = #{id}
+        where companyId = #{companyId}
+    </select>
+
+    <select id="getAllJobInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        select * from companyjob
+        <where>
+            <if test="id != null and id != ''">
+                AND user_id = #{id}
+            </if>
+            <if test="jobName != null and jobName != ''">
+                AND jobName like '%${jobName}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="getPersonalInfo" resultType="java.util.Map">
+        select * from companyinfo
+        where user_id = #{id}
+    </select>
+
+    <select id="updateIdNumber" parameterType="java.util.Map">
+        UPDATE companyinfo
+        SET phone = #{phone},idNumber =  #{idNumber}
+        WHERE name = #{name}
+    </select>
+
+    <select id="deleteById" parameterType="java.util.Map">
+        delete
+        from companyjob
+        where companyId = #{companyId}
+    </select>
+
+    <select id="getPostUserInfo" resultType="java.util.Map">
+        SELECT * FROM userinfo AS d
+        INNER JOIN
+        (SELECT DISTINCT a.userId AS userId,b.user_id AS companyId
+        FROM company_userinfo AS a
+        INNER JOIN companyjob AS b
+        ON a.companyId = b.companyId
+        WHERE b.user_id = #{userId}) AS c
+        ON d.user_id = c.userId
+    </select>
+
+</mapper>
