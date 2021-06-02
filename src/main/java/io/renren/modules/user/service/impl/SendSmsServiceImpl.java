@@ -19,7 +19,7 @@ import java.util.Map;
 public class SendSmsServiceImpl implements SendSmsService {
     @Override
     public boolean send(String phoneNum, String templateCode, Map<String, Object> code) {
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "AccessKey ID", "AccessKey Secret");
+        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4GJJCCVFN3Jv8zxjveD3", "ExnK4ojzNkKEhM9HubxBeIqGvesaj8");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();

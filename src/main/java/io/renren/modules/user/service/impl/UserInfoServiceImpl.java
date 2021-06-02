@@ -52,6 +52,11 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public Map<String, Object> getCertification(Map<String, Object> params) {
+        return userInfoDao.getCertification(params);
+    }
+
+    @Override
     public void updateIdNumber(Map<String,Object> params) {
         userInfoDao.updateIdNumber(params);
     }

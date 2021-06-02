@@ -68,7 +68,14 @@ public class UserController extends AbstractController {
     @PostMapping("/updateUserInfo")
     public R updateUserInfo(@RequestParam Map<String,Object> params){
         try {
-            userInfoService.updateUserInfo(params);
+            params.put("id",getUser().getUserId());
+            SysUserEntity user = getUser();
+            if (user.getCertification() == 1){
+                userInfoService.updateUserInfo(params);
+            }else {
+                return R.error("请先认证");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             return R.ok("操作失败");
@@ -135,7 +142,13 @@ public class UserController extends AbstractController {
     public R saveCompanyPost(@RequestParam Map<String,Object> params){
         params.put("userId",getUser().getUserId());
         try {
-            userInfoService.saveCompanyPost(params);
+            SysUserEntity user = getUser();
+            if (user.getCertification() == 1){
+                userInfoService.saveCompanyPost(params);
+            }else {
+                return R.error("请先认证");
+            }
+
         }catch (Exception e){
             return R.error("投递失败");
         }

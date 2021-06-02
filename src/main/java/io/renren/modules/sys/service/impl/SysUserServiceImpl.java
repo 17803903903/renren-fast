@@ -95,11 +95,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserDao, SysUserEntity> i
 	@Override
 	@Transactional
 	public void update(SysUserEntity user) {
-		if(StringUtils.isBlank(user.getPassword())){
-
-		}else{
-			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
-		}
+//		if(StringUtils.isBlank(user.getPassword())){
+//
+//		}else{
+//			user.setPassword(new Sha256Hash(user.getPassword(), user.getSalt()).toHex());
+//		}
 		this.updateById(user);
 
 		//检查角色是否越权

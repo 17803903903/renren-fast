@@ -26,4 +26,6 @@ public interface UserInfoDao {
     List<Map<String,Object>> getAllJobInfo(Map<String,Object> params);
 
     void saveCompanyPost(Map<String,Object> params);
+
+    Map<String,Object> getCertification(Map<String,Object> params);
 }

@@ -8,8 +8,8 @@
 
     <select id="updateUserInfo" parameterType="java.util.Map">
         UPDATE userinfo
-        SET phone = #{phone}, email = #{email},address = #{address}, detail = #{detail}, family = #{family}, education = #{education}, work = #{work},description =  #{description},idNumber =  #{idNumber}
-        WHERE name = #{name}
+        SET name = #{name},phone = #{phone},date = #{date}, email = #{email},address = #{address}, family = #{family}, education = #{education}, work = #{work},description =  #{description},idNumber =  #{idNumber}
+        WHERE user_id = #{id}
     </select>
 
     <select id="updateIdNumber" parameterType="java.util.Map">
@@ -19,8 +19,8 @@
     </select>
 
     <select id="saveUserInfo" parameterType="java.util.Map">
-        INSERT INTO userinfo (`name`, `phone`, `date`, `email`, `address`, `detail`, `family`, `education`, `work`, `description`, `idNumber`,`user_id`)
-        VALUES (#{name}, #{phone}, #{date}, #{email}, #{address}, #{detail}, #{family}, #{education}, #{work}, #{description}, #{idNumber},#{id})
+        INSERT INTO userinfo (`name`, `phone`, `date`, `email`, `address`,  `family`, `education`, `work`, `description`, `idNumber`,`user_id`)
+        VALUES (#{name}, #{phone}, #{date}, #{email}, #{address},  #{family}, #{education}, #{work}, #{description}, #{idNumber},#{id})
     </select>
 
     <select id="getPersonalInfo" resultType="java.util.Map">
@@ -43,6 +43,11 @@
     <select id="saveCompanyPost" parameterType="java.util.Map">
         INSERT INTO company_userinfo (`companyId`, `userId`)
         VALUES (#{companyId},#{userId})
+    </select>
+
+    <select id="getCertification" parameterType="java.util.Map" resultType="java.util.Map">
+        select certification from sys_user
+        where user_id = #{id}
     </select>
 
 </mapper>

@@ -16,6 +16,8 @@ public interface CompanyInfoDao {
 
     void saveCompanyInfo(Map<String,Object> params);
 
+    void updateCompanyInfo(Map<String,Object> params);
+
     void saveCompanyJob(Map<String,Object> params);
 
     void updateCompanyJob(Map<String,Object> params);

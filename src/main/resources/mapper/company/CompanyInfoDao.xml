@@ -7,6 +7,12 @@
         VALUES (#{name}, #{phone}, #{address}, #{email}, #{detail}, #{id})
     </select>
 
+    <select id="updateCompanyInfo" parameterType="java.util.Map">
+        update companyinfo
+        set name = #{name},phone = #{phone},address = #{address},email = #{email},detail = #{detail}
+        where user_id = #{id}
+    </select>
+
     <select id="saveCompanyJob" parameterType="java.util.Map">
         INSERT INTO companyjob (`name`, `jobName`, `jobDetail`, `jobDuty`, `money`, `required`, `user_id`)
         VALUES (#{name}, #{jobName}, #{jobDetail}, #{jobDuty}, #{money}, #{required}, #{id})

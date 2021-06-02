@@ -23,6 +23,11 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public void updateCompanyInfo(Map<String, Object> params) {
+        companyInfoDao.updateCompanyInfo(params);
+    }
+
+    @Override
     public void saveCompanyJob(Map<String, Object> params) {
         companyInfoDao.saveCompanyJob(params);
     }

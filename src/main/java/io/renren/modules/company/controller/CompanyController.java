@@ -5,6 +5,7 @@ import io.renren.modules.company.service.CompanyService;
 import io.renren.modules.sys.controller.AbstractController;
 import io.renren.modules.sys.entity.SysUserEntity;
 import io.renren.modules.sys.service.SysUserService;
+import io.renren.modules.user.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -32,18 +33,23 @@ public class CompanyController extends AbstractController {
     @Autowired
     SysUserService sysUserService;
 
+    @Autowired
+    UserInfoService userInfoService;
+
     @PostMapping("/saveCompanyInfo")
     public R saveCompanyInfo(@RequestParam Map<String,Object> params){
         params.put("id",getUser().getUserId());
         if (companyService.getPersonalInfo(params)!= null){
-            return R.error("数据库中已存在您的个人信息");
+            companyService.updateCompanyInfo(params);
+        }else {
+            try {
+                companyService.saveCompanyInfo(params);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return R.ok("操作失败");
+            }
         }
-        try {
-            companyService.saveCompanyInfo(params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.ok("操作失败");
-        }
+
         return R.ok("操作成功");
     }
 
@@ -51,7 +57,12 @@ public class CompanyController extends AbstractController {
     public R saveCompanyJob(@RequestParam Map<String,Object> params){
         params.put("id",getUser().getUserId());
         try {
-            companyService.saveCompanyJob(params);
+            SysUserEntity user = getUser();
+            if (user.getCertification() == 1){
+                companyService.saveCompanyJob(params);
+            }else {
+                return R.error("请先认证");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return R.ok("操作失败");
